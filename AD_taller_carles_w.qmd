@@ -11,16 +11,24 @@ format:
 Rendering:
     embed-resources: true
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(readr)
+```
 
 Quiero ver que en la adolescencia el tiempo dedicado al móvil es mayor que entre adultos. Para ello, nos interesan las variables siguientes: 
 
 
 # RESUMEN
-Estudiaremos la como varía el tiempo dedicado a las pantallas entre distintos rangos de edad.
+Estudiaremos como varía el tiempo dedicado a las pantallas (y redes sociales) entre los distintos rangos de edad y su posible relación con las actividades programadas como puede ser entrenar algun deporte o las extraescolares en niños.
 
 
 ## OBJETIVOS
-Ver que la edad no es un factor significativo para consumir más redes sociales
+Queremos ver que la edad no es un factor significativo para consumir más redes sociales, igual que no hay correlación entre tener una agenda más apretada y el tiempo de uso de la pantallas. 
 
 
 ### METODOLOGÍA
@@ -36,36 +44,54 @@ Ver que la edad no es un factor significativo para consumir más redes sociales
 
 
 # PLANTEAMIENTO
-Cremos unos datos con los que trabajar a partir de una normal multivariante de media $\mu = (0.7,0.66,0.51,6.5)$ y matriz de covarianzas:
+Creemos unos datos con los que trabajar a partir de una normal multivariante de media $\mu=(0.7,0.66,0.51,6.5)$ y matriz de covarianzas:
+$$\Sigma = 
+\begin{pmatrix}
+0.3 & 0.08 & 0.05 & 0.05 \\
+0.09 & 0.28 & 0.03 & 0.01 \\
+0.08 & 0.005 &  0.32 & 0.01 \\
+0.08 & 0.38 & 0.49 & 2
+\end{pmatrix}$$
+Las variables cuantitativas que usaremos son 'consumo_pantalla', el número de horas al día con pantallas abiertas, 'consumo_aplicaciones' y 'consumo_redes' de igual forma con el tiempo dedicado a aplicaciones y a las redes, respectivamente, y, 'horas_act_programadas' que es el total de horas semanales dedicadas a actividades programadas externas al trabajo y a los estudios como pueden ser hacer deporte, clases de teatro, etc.
+Como variables ordinales tenemos 'edad' que se divide en cuatro niveles de manera ordenada: 'Niño', 'Joven', 'Adulto' y 'Mayor', la variable 'nivel_estres' con niveles: 'Muy Bajo', 'Bajo', 'Medio', 'Alto', 'Muy Alto' y, como última variable ordinal 'habito_lectura' con los siguientes niveles: 'Nada', 'Poco', 'Regular', 'Frecuente', 'Muy Frecuente'.
+Finalmente, como variables nominales estn, por un lado la variable 'dispositivo_usual' con las cuatro siguientes opciones: 'móvil', 'tele', 'tablet', 'PC'; y por otro lado 'max_dedicacion' con una de estas tres opciones: 'lectura', 'deporte' y 'pantallas'. 
 
 
-```{r}
+```{r, echo=FALSE}
 library(MASS)
 
-media <- c(0.7, 0.66, 0.51, 6.5)  # Medias de consumo_pantalla (horas/dia), consumo_aplicaciones (horas/dia), consumo_redes (horas dia), horas_ocupado (horas/semana)
+media <- c(1.3, 1.26, 1.11, 6.5)  # Medias de consumo_pantalla (horas/dia), consumo_aplicaciones (horas/dia), consumo_redes (horas dia), horas_act_programadas (horas/semana)
 covarianza <- matrix(c(0.3, 0.08, 0.05, 0.05,
                        0.09, 0.28, 0.03, 0.01,
                        0.08, 0.005, 0.32, 0.01,
-                       0.8, 0.78, 0.79, 3), 
+                       0.08, 0.38, 0.49, 2), 
                      nrow = 4, ncol = 4)
 
 
-set.seed(23)
+set.seed(2332)
 datos_numericos <- mvrnorm(150, mu = media, Sigma = covarianza)
 
-# Limitar y ajustar valores de promedio_calificaciones a escala 1-10
-datos_numericos[,4] <- pmin(pmax(round(datos_numericos[,4], 2), 0), 60)
+# Limitar y ajustar valores de las variables según su rango real
+datos_numericos[,1] <- pmin(pmax(round(datos_numericos[,1], 2), 0), 24)
+datos_numericos[,2] <- pmin(pmax(round(datos_numericos[,2], 2), 0), 24)
+datos_numericos[,3] <- pmin(pmax(round(datos_numericos[,3], 2), 0), 24)
+datos_numericos[,4] <- pmin(pmax(round(datos_numericos[,4], 2), 0), 168)
+
 
 # Tabla 1 con los datos 
 tiempo_libre <- data.frame(
   consumo_pantalla = round(datos_numericos[,1], 2),
   consumo_aplicaciones = round(datos_numericos[,2], 2),
-  consumo_redes = round(datos_numericos[,3]),
-  horas_ocupado = datos_numericos[,4],
-  tipo_escuela = sample(c("Pública", "Privada"), 150, replace = TRUE),
-  nivel_interes = ordered(sample(1:5, 150, replace = TRUE), labels = c("Muy Bajo", "Bajo", "Medio", "Alto", "Muy Alto")),
-  habito_lectura = ordered(sample(1:5, 150, replace = TRUE), labels = c("Nada", "Poco", "Regular", "Frecuente", "Muy Frecuente"))
+  consumo_redes = round(datos_numericos[,3], 2),
+  horas_ocupado = round(datos_numericos[,4], 2),
+  edad = ordered(sample(1:4, 150, replace = TRUE), labels = c("Niño", "Joven", "Adulto", "Mayor")),
+  nivel_estres = ordered(sample(1:5, 150, replace = TRUE), labels = c("Muy Bajo", "Bajo", "Medio", "Alto", "Muy Alto")),
+  habito_lectura = ordered(sample(1:5, 150, replace = TRUE), labels = c("Nada", "Poco", "Regular", "Frecuente", "Muy Frecuente")),
+  dispositivo_usual = sample(c("móvil", "tele", "tablet", "PC"), 150, replace = TRUE),
+  max_dedicacion = sample(c("lectura", "deporte", "pantallas"), 150, replace = TRUE)
 )
+
+
 ```
 
 
@@ -73,7 +99,32 @@ tiempo_libre <- data.frame(
 
 # ANÁLISIS DESCRIPTIVO
 
+```{r, echo=FALSE}
+a <- tiempo_libre %>%
+  dplyr::select( 1:5) %>%
+  na.omit
 
+library(GGally)
+ggpairs(a)
+
+
+```
+En este gráfico podemos ver como solo destaca cierta correlación entre el tiempo (horas/día) frente a pantallas y el tiempo usado en aplicaciones. Más adelante haremos un test de correlaciones para saber si es o no significativa.
+
+Calculemos, a continuación, la varianza generalizada y la total para obtener más información. La varianza generalizada es el producto de los valores propios de la matriz de covarianzas muestrales $S$. Mientras que la variación total es la suma de los valores propios de la matriz de covarianzas muestrales.
+
+```{r, echo=FALSE}
+cuantitativas <- tiempo_libre %>%
+  dplyr::select(1:4) %>%
+  na.omit
+
+S = cov(cuantitativas)
+varianza_generalizada<-prod(eigen(S)$values)
+variacion_total<-sum(eigen(S)$values)
+
+```
+
+En este caso, la varianza generalizada tiene un valor de $0.0467$ y la varianza total de $3.1441$. Como la varianza total es mucho más grande que la varianza generalizada (dos ordenes de magnitud), podemos decir que pese a la variación individual que presentan las variables, todas estan fuertemente correlacionadas entre sí lo que podría indicar que hay redundancia entre las variables.
 
 # PRUEBAS ESTADÍSTICAS
 
