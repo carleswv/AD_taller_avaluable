@@ -128,6 +128,55 @@ En este caso, la varianza generalizada tiene un valor de $0.0467$ y la varianza 
 
 # PRUEBAS ESTADÍSTICAS
 
+Para el cuarto paso elegimos la variable 'max_dedicacion' que representa la actividad que más tiempo consume al indiviuo de entre deporte, lectura o pantallas. Estimaremos los parámetros de esta variable suponiendo que sigue una distribución multinomial. Usaremos la frecuencia relativa para estimar la probabilidad de cada suceso y calcularemos la probabilidad de que de 20 individuos, haya más de seis que prioricen cosas distintas (o le inviertan más tiempo).
+
+```{r, echo=FALSE}
+prob = tiempo_libre %>%
+  dplyr::select(max_dedicacion) %>%
+  count(max_dedicacion) %>%
+  mutate(frecuencia_relativa = n/sum(n)) %>%
+  dplyr::select(3)
+
+prob = as.matrix(prob)
+
+est_medias = 150 * prob
+
+est_S = 150 * (diag(prob) - prob %*% t(prob))
+
+# Las posibles combinaciones para buscar la probabilidad son:
+# 6,7,7 // 7,6,7 // 7,7,6
+p_1 = dmultinom(c(6,7,7), prob = prob)
+p_2 = dmultinom(c(7,6,7), prob = prob)
+p_3 = dmultinom(c(7,7,6), prob = prob)
+
+p = p_1 + p_2 + p_3
+p
+```
+Así, en una muestra de $20$ la probabilidad es de un $10.45$% de que seis o más personas dediquen más tiempo a actividades distintas.
+
+A continuación ajustaremos la variable 'consumo_aplicaciones' repecto a las otras tres variables cuantitativas.
+
+
+```{r}
+Y = cuantitativas$consumo_aplicaciones
+X = cuantitativas %>%
+  dplyr::select(c(1,3,4))
+
+# Ajustar el modelo de regresión
+modelo <- lm(Y ~ ., data = cuantitativas)
+summary(modelo)  # Resumen del modelo
+```
+
+
+```{r}
+# Calcular la función de score (predicciones)
+predicciones <- predict(modelo, newdata = cuantitativas)
+
+# Agregar la predicción al conjunto de datos original
+cuantitativas$predicciones <- predicciones
+
+cuantitativas
+```
 
 
 # CONCLUSIONES
