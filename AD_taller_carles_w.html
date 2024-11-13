@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Carles Westendorf Vidal">
-<meta name="dcterms.date" content="2024-11-12">
+<meta name="dcterms.date" content="2024-11-13">
 
 <title>Taller evaluado de repaso para el Primer Parcial</title>
 <style>
@@ -116,15 +116,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#metodología" id="toc-metodología" class="nav-link" data-scroll-target="#metodología">METODOLOGÍA</a></li>
   </ul></li>
-  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">RESULTADOS</a>
-  <ul class="collapse">
-  <li><a href="#implicaciones" id="toc-implicaciones" class="nav-link" data-scroll-target="#implicaciones">IMPLICACIONES</a></li>
-  </ul></li>
+  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">RESULTADOS</a></li>
   </ul></li>
   <li><a href="#planteamiento" id="toc-planteamiento" class="nav-link" data-scroll-target="#planteamiento">PLANTEAMIENTO</a></li>
   <li><a href="#análisis-descriptivo" id="toc-análisis-descriptivo" class="nav-link" data-scroll-target="#análisis-descriptivo">ANÁLISIS DESCRIPTIVO</a></li>
   <li><a href="#pruebas-estadísticas" id="toc-pruebas-estadísticas" class="nav-link" data-scroll-target="#pruebas-estadísticas">PRUEBAS ESTADÍSTICAS</a></li>
-  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">CONCLUSIONES</a></li>
   <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">BIBLIOGRAFÍA</a></li>
   </ul>
 </nav>
@@ -151,7 +147,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 12, 2024</p>
+      <p class="date">November 13, 2024</p>
     </div>
   </div>
   
@@ -163,22 +159,20 @@ window.Quarto = {
 </header>
 
 
-<p>Quiero ver que en la adolescencia el tiempo dedicado al móvil es mayor que entre adultos. Para ello, nos interesan las variables siguientes:</p>
 <section id="resumen" class="level1">
 <h1>RESUMEN</h1>
-<p>Estudiaremos como varía el tiempo dedicado a las pantallas (y redes sociales) entre los distintos rangos de edad y su posible relación con las actividades programadas como puede ser entrenar algun deporte o las extraescolares en niños.</p>
+<p>Estudiaremos como varía el tiempo dedicado a las pantallas (y redes sociales) entre los distintos rangos de edad y su posible relación con las actividades programadas como puede ser entrenar algun deporte, la lectura o las extraescolares en niños.</p>
 <section id="objetivos" class="level2">
 <h2 class="anchored" data-anchor-id="objetivos">OBJETIVOS</h2>
-<p>Queremos ver que la edad no es un factor significativo para consumir más redes sociales, igual que no hay correlación entre tener una agenda más apretada y el tiempo de uso de la pantallas.</p>
+<p>Queremos ver que los distintos habitos no están correlacionados (porque nuestros datos son aleatorios).</p>
 <section id="metodología" class="level3">
 <h3 class="anchored" data-anchor-id="metodología">METODOLOGÍA</h3>
+<p>Usaremos herramientas de analisis multivariante, en particular nos apoyaremos en la normalidad multivariante. También modelarizaremos por multinomiales y por regresiones multiples.</p>
 </section>
 </section>
 <section id="resultados" class="level2">
 <h2 class="anchored" data-anchor-id="resultados">RESULTADOS</h2>
-<section id="implicaciones" class="level3">
-<h3 class="anchored" data-anchor-id="implicaciones">IMPLICACIONES</h3>
-</section>
+<p>Hay bastante redundancia en los datos, estan bien repartidos y, pese a todo esto, podemos decir que las medias de los datos cuantitativos es distinto para gente con distintas prioridades.</p>
 </section>
 </section>
 <section id="planteamiento" class="level1">
@@ -189,49 +183,11 @@ window.Quarto = {
 0.09 &amp; 0.28 &amp; 0.03 &amp; 0.01 \\
 0.08 &amp; 0.005 &amp;  0.32 &amp; 0.01 \\
 0.08 &amp; 0.38 &amp; 0.49 &amp; 2
-\end{pmatrix}\]</span> Las variables cuantitativas que usaremos son ‘consumo_pantalla’, el número de horas al día con pantallas abiertas, ‘consumo_aplicaciones’ y ‘consumo_redes’ de igual forma con el tiempo dedicado a aplicaciones y a las redes, respectivamente, y, ‘horas_act_programadas’ que es el total de horas semanales dedicadas a actividades programadas externas al trabajo y a los estudios como pueden ser hacer deporte, clases de teatro, etc. Como variables ordinales tenemos ‘edad’ que se divide en cuatro niveles de manera ordenada: ‘Niño’, ‘Joven’, ‘Adulto’ y ‘Mayor’, la variable ‘nivel_estres’ con niveles: ‘Muy Bajo’, ‘Bajo’, ‘Medio’, ‘Alto’, ‘Muy Alto’ Y, como variables nominales, está la variable</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>media <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.3</span>, <span class="fl">1.26</span>, <span class="fl">1.11</span>, <span class="fl">6.5</span>)  <span class="co"># Medias de consumo_pantalla (horas/dia), consumo_aplicaciones (horas/dia), consumo_redes (horas dia), horas_act_programadas (horas/semana)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>covarianza <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.08</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                       <span class="fl">0.09</span>, <span class="fl">0.28</span>, <span class="fl">0.03</span>, <span class="fl">0.01</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                       <span class="fl">0.08</span>, <span class="fl">0.005</span>, <span class="fl">0.32</span>, <span class="fl">0.01</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                       <span class="fl">0.08</span>, <span class="fl">0.38</span>, <span class="fl">0.49</span>, <span class="dv">2</span>), </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2332</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>datos_numericos <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">150</span>, <span class="at">mu =</span> media, <span class="at">Sigma =</span> covarianza)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Limitar y ajustar valores de las variables según su rango real</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>datos_numericos[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(<span class="fu">round</span>(datos_numericos[,<span class="dv">1</span>], <span class="dv">2</span>), <span class="dv">0</span>), <span class="dv">24</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>datos_numericos[,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(<span class="fu">round</span>(datos_numericos[,<span class="dv">2</span>], <span class="dv">2</span>), <span class="dv">0</span>), <span class="dv">24</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>datos_numericos[,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(<span class="fu">round</span>(datos_numericos[,<span class="dv">3</span>], <span class="dv">2</span>), <span class="dv">0</span>), <span class="dv">24</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>datos_numericos[,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(<span class="fu">round</span>(datos_numericos[,<span class="dv">4</span>], <span class="dv">2</span>), <span class="dv">0</span>), <span class="dv">168</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla 1 con los datos </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>tiempo_libre <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">consumo_pantalla =</span> <span class="fu">round</span>(datos_numericos[,<span class="dv">1</span>], <span class="dv">2</span>),</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">consumo_aplicaciones =</span> <span class="fu">round</span>(datos_numericos[,<span class="dv">2</span>], <span class="dv">2</span>),</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">consumo_redes =</span> <span class="fu">round</span>(datos_numericos[,<span class="dv">3</span>], <span class="dv">2</span>),</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">horas_ocupado =</span> <span class="fu">round</span>(datos_numericos[,<span class="dv">4</span>], <span class="dv">2</span>),</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">edad =</span> <span class="fu">ordered</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">150</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Niño"</span>, <span class="st">"Joven"</span>, <span class="st">"Adulto"</span>, <span class="st">"Mayor"</span>)),</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">nivel_estres =</span> <span class="fu">ordered</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">150</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Muy Bajo"</span>, <span class="st">"Bajo"</span>, <span class="st">"Medio"</span>, <span class="st">"Alto"</span>, <span class="st">"Muy Alto"</span>)),</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">habito_lectura =</span> <span class="fu">ordered</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">150</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Nada"</span>, <span class="st">"Poco"</span>, <span class="st">"Regular"</span>, <span class="st">"Frecuente"</span>, <span class="st">"Muy Frecuente"</span>))</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+\end{pmatrix}\]</span> Las variables cuantitativas que usaremos son ‘consumo_pantalla’, el número de horas al día con pantallas abiertas, ‘consumo_aplicaciones’ y ‘consumo_redes’ de igual forma con el tiempo dedicado a aplicaciones y a las redes, respectivamente, y, ‘horas_act_programadas’ que es el total de horas semanales dedicadas a actividades programadas externas al trabajo y a los estudios como pueden ser hacer deporte, clases de teatro, etc. Como variables ordinales tenemos ‘edad’ que se divide en cuatro niveles de manera ordenada: ‘Niño’, ‘Joven’, ‘Adulto’ y ‘Mayor’, la variable ‘nivel_estres’ con niveles: ‘Muy Bajo’, ‘Bajo’, ‘Medio’, ‘Alto’, ‘Muy Alto’ y, como última variable ordinal ‘habito_lectura’ con los siguientes niveles: ‘Nada’, ‘Poco’, ‘Regular’, ‘Frecuente’, ‘Muy Frecuente’. Finalmente, como variables nominales estn, por un lado la variable ‘dispositivo_usual’ con las cuatro siguientes opciones: ‘móvil’, ‘tele’, ‘tablet’, ‘PC’; y por otro lado ‘max_dedicacion’ con una de estas tres opciones: ‘lectura’, ‘deporte’ y ‘pantallas’.</p>
 </section>
 <section id="análisis-descriptivo" class="level1">
 <h1>ANÁLISIS DESCRIPTIVO</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> tiempo_libre <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  na.omit</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -240,15 +196,100 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>En este gráfico podemos ver como solo destaca cierta correlación entre el tiempo (horas/día) frente a pantallas y el tiempo usado en aplicaciones. Más adelante haremos un test de correlaciones para saber si es o no significativa.</p>
+<p>Calculemos, a continuación, la varianza generalizada y la total para obtener más información. La varianza generalizada es el producto de los valores propios de la matriz de covarianzas muestrales <span class="math inline">\(S\)</span>. Mientras que la variación total es la suma de los valores propios de la matriz de covarianzas muestrales.</p>
+<p>En este caso, la varianza generalizada tiene un valor de <span class="math inline">\(0.0467\)</span> y la varianza total de <span class="math inline">\(3.1441\)</span>. Como la varianza total es mucho más grande que la varianza generalizada (dos ordenes de magnitud), podemos decir que pese a la variación individual que presentan las variables, todas estan fuertemente correlacionadas entre sí lo que podría indicar que hay redundancia entre las variables.</p>
 </section>
 <section id="pruebas-estadísticas" class="level1">
 <h1>PRUEBAS ESTADÍSTICAS</h1>
-</section>
-<section id="conclusiones" class="level1">
-<h1>CONCLUSIONES</h1>
+<p>Para el cuarto paso elegimos la variable ‘max_dedicacion’ que representa la actividad que más tiempo consume al indiviuo de entre deporte, lectura o pantallas. Estimaremos los parámetros de esta variable suponiendo que sigue una distribución multinomial. Usaremos la frecuencia relativa para estimar la probabilidad de cada suceso y calcularemos la probabilidad de que de 20 individuos, haya más de seis que prioricen cosas distintas (o le inviertan más tiempo).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1045689</code></pre>
+</div>
+</div>
+<p>Así, en una muestra de <span class="math inline">\(20\)</span> la probabilidad es de un <span class="math inline">\(10.45\)</span>% de que seis o más personas dediquen más tiempo a actividades distintas.</p>
+<p>A continuación ajustaremos la variable ‘consumo_aplicaciones’ repecto a las otras tres variables cuantitativas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> cuantitativas<span class="sc">$</span>consumo_aplicaciones</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> cuantitativas <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar el modelo de regresión</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> ., <span class="at">data =</span> X)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)  <span class="co"># Resumen del modelo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Y ~ ., data = X)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.99466 -0.38318 -0.02134  0.42046  1.09767 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       0.77761    0.22198   3.503 0.000611 ***
+consumo_pantalla  0.27847    0.07825   3.558 0.000504 ***
+consumo_redes     0.03472    0.07166   0.484 0.628778    
+horas_ocupado     0.01684    0.02669   0.631 0.529074    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4937 on 146 degrees of freedom
+Multiple R-squared:  0.08393,   Adjusted R-squared:  0.06511 
+F-statistic: 4.459 on 3 and 146 DF,  p-value: 0.004991</code></pre>
+</div>
+</div>
+<p>Ahora, calculemos la función ‘score’ de <span class="math inline">\(Y\)</span> con parámetros <span class="math inline">\(\beta_0, \beta_1, \beta_2\)</span> y <span class="math inline">\(\beta_3\)</span>. No he podido realizar esta parte puesto que no termino de comprender que es la función score de este modelo. Entiendo que será una matriz <span class="math inline">\(4 \times 1\)</span> con cada componente la parcial respecto a una de las variables pero no de <span class="math inline">\(Y\)</span>, sino de <span class="math inline">\(f = log(Y)\)</span> que es más extraño. Así, usaremos lo que nos dice internet que relaciona estos dos conceptos a través de la funcón ‘predict’:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>predicciones <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, X)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo de métricas</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>mse <span class="ot">&lt;-</span> <span class="fu">mean</span>((Y <span class="sc">-</span> predicciones)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>mae <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> predicciones))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo)<span class="sc">$</span>r.squared</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir resultados</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"MSE:"</span>, mse, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSE: 0.2372031 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"MAE:"</span>, mae, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MAE: 0.4036612 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"R²:"</span>, r2, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R²: 0.08393035 </code></pre>
+</div>
+</div>
+<p>Que parece ser que nos advierten de que el modelo no se ajusta bien a los datos.</p>
+<p>Finalmente, para realizar el quinto paso de la entrega, hagamos un contraste de hipótesis para medias entre la variable ‘consumo_aplicaciones’ y ‘consumo_redes’:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hotelling)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>lectores <span class="ot">&lt;-</span> tiempo_libre <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(max_dedicacion <span class="sc">==</span> <span class="st">"lectura"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>adictos <span class="ot">&lt;-</span> tiempo_libre <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(max_dedicacion <span class="sc">==</span> <span class="st">"pantallas"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>resultado <span class="ot">&lt;-</span> <span class="fu">hotelling.test</span>(lectores, adictos)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resultado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test stat:  10.376 
+Numerator df:  4 
+Denominator df:  88 
+P-value:  0.04757 </code></pre>
+</div>
+</div>
+<p>Como el p-valor es ligeramnete menor a <span class="math inline">\(0.05\)</span>, en este caso existen suficientes evidencias estadísticas como para rechazar la hipótesis de que los vectores de medias son iguales.</p>
 </section>
 <section id="bibliografía" class="level1">
 <h1>BIBLIOGRAFÍA</h1>
+<p>Cuadras y los apuntes de mercè e Irene.</p>
 </section>
 
 </main>

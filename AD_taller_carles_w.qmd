@@ -20,26 +20,20 @@ library(tidyverse)
 library(readr)
 ```
 
-Quiero ver que en la adolescencia el tiempo dedicado al móvil es mayor que entre adultos. Para ello, nos interesan las variables siguientes: 
-
 
 # RESUMEN
-Estudiaremos como varía el tiempo dedicado a las pantallas (y redes sociales) entre los distintos rangos de edad y su posible relación con las actividades programadas como puede ser entrenar algun deporte o las extraescolares en niños.
+Estudiaremos como varía el tiempo dedicado a las pantallas (y redes sociales) entre los distintos rangos de edad y su posible relación con las actividades programadas como puede ser entrenar algun deporte, la lectura o las extraescolares en niños.
 
 
 ## OBJETIVOS
-Queremos ver que la edad no es un factor significativo para consumir más redes sociales, igual que no hay correlación entre tener una agenda más apretada y el tiempo de uso de la pantallas. 
-
+Queremos ver que los distintos habitos no están correlacionados (porque nuestros datos son aleatorios).
 
 ### METODOLOGÍA
-
+Usaremos herramientas de analisis multivariante, en particular nos apoyaremos en la normalidad multivariante. También modelarizaremos por multinomiales y por regresiones multiples.
 
 
 ## RESULTADOS
-
-
-
-### IMPLICACIONES
+Hay bastante redundancia en los datos, estan bien repartidos y, pese a todo esto, podemos decir que las medias de los datos cuantitativos es distinto para gente con distintas prioridades.
 
 
 
@@ -163,28 +157,52 @@ X = cuantitativas %>%
   dplyr::select(c(1,3,4))
 
 # Ajustar el modelo de regresión
-modelo <- lm(Y ~ ., data = cuantitativas)
+modelo <- lm(Y ~ ., data = X)
 summary(modelo)  # Resumen del modelo
 ```
 
 
+
+Ahora, calculemos la función 'score' de $Y$ con parámetros $\beta_0, \beta_1, \beta_2$ y $\beta_3$. No he podido realizar esta parte puesto que no termino de comprender que es la función score de este modelo. Entiendo que será una matriz $4 \times 1$ con cada componente la parcial respecto a una de las variables pero no de $Y$, sino de $f = log(Y)$ que es más extraño. 
+Así, usaremos lo que nos dice internet que relaciona estos dos conceptos a través de la funcón 'predict':
+
 ```{r}
-# Calcular la función de score (predicciones)
-predicciones <- predict(modelo, newdata = cuantitativas)
+predicciones <- predict(modelo, X)
 
-# Agregar la predicción al conjunto de datos original
-cuantitativas$predicciones <- predicciones
+# Cálculo de métricas
+mse <- mean((Y - predicciones)^2)
+mae <- mean(abs(Y - predicciones))
+r2 <- summary(modelo)$r.squared
 
-cuantitativas
+# Imprimir resultados
+cat("MSE:", mse, "\n")
+cat("MAE:", mae, "\n")
+cat("R²:", r2, "\n")
+
 ```
+Que parece ser que nos advierten de que el modelo no se ajusta bien a los datos.
 
+Finalmente, para realizar el quinto paso de la entrega, hagamos un contraste de hipótesis para medias entre la variable 'consumo_aplicaciones' y 'consumo_redes':
 
-# CONCLUSIONES
+```{r}
+library(Hotelling)
+
+lectores <- tiempo_libre %>%
+  filter(max_dedicacion == "lectura") %>%
+  dplyr::select(c(1,2,3,4))
+adictos <- tiempo_libre %>%
+  filter(max_dedicacion == "pantallas") %>%
+  dplyr::select(c(1,2,3,4))
+
+resultado <- hotelling.test(lectores, adictos)
+print(resultado)
+```
+Como el p-valor es ligeramnete menor a $0.05$, en este caso existen suficientes evidencias estadísticas como para rechazar la hipótesis de que los vectores de medias son iguales.
 
 
 
 # BIBLIOGRAFÍA
-
+Cuadras y los apuntes de mercè e Irene.
 
 
 
